@@ -24,7 +24,7 @@ namespace xtd
         constexpr id_t(const id_t& that) = default;
         constexpr id_t(id_t&& that) = default;
         id_t& operator=(const id_t& that) = delete;
-        constexpr bool operator==(const id_t& that) const { return x == that.x && y == that.y; }
+        bool operator==(const id_t& that) const { return x == that.x && y == that.y; }
 
         static constexpr id_t invalid() { return id_t(); }
     };

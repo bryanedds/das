@@ -13,9 +13,9 @@ namespace tut
     //
     // 1) data abstractions rather than OOP objects
     // 2) stand-alone functions rather than member functions
-    // 3) opaque mixins instead of OOP inheritance
-    // 4) a strong preference for the following types of polymorphsm -
-    //      a) ad-hoc polymorphism (overloading)
+    // 3) opaque mixins rather than OOP inheritance
+    // 4) the following types of polymorphism rather than OOP polymorphism -
+    //      a) ad-hoc polymorphism (function overloading)
     //      b) structural polymorphism (function templates without specialization)
     //      c) static polymorphisms (function template with specialization)
     //
@@ -27,9 +27,9 @@ namespace tut
     // So let's get started!
 
     // Here we have a data abstraction, or 'DA'. You can tell it is different from an OOP object as
-    // it has no member functions (save for destructors and operators). Its advantages are that it
-    // should keep you from using OOP unnecessarily, and has better generic usage (especially with
-    // respect to the following forms of polymorphism).
+    // it has no member functions (save for ctors, dtors, and operators). Its advantages are that
+    // it should keep you from using OOP unnecessarily, and has better generic usage (especially
+    // with respect to the following forms of polymorphism).
     //
     // Also unlike objects, DA's only do what they must in order to implement a localized
     // semantics, rather than as much as they can for the wider system.

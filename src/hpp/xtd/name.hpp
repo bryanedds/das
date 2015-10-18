@@ -29,7 +29,7 @@ namespace xtd
 
     public:
 
-        name_t(const std::string& name_str) : hash_code(std::hash<std::string>()(name_str)), name_str(name_str) { }
+        name_t(const std::string& name_str) : hash_code(xtd::get_hash(name_str)), name_str(name_str) { }
         name_t(const name_t& that) = default;
         name_t(name_t&& that) = default;
         name_t& operator=(const name_t& that) = delete;
