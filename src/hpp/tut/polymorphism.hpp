@@ -27,7 +27,7 @@ namespace tut
     // So let's get started!
 
     // Here we have a data abstraction, or 'DA'. You can tell it is different from an OOP object as
-    // it has no member functions (save for ctors, dtors, and operators). Its advantages are that
+    // it has no public functions (save for ctors, dtors, and operators). Its advantages are that
     // it should keep you from using OOP unnecessarily, and has better generic usage (especially
     // with respect to the following forms of polymorphism).
     //
