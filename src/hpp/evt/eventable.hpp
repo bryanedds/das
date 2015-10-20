@@ -2,6 +2,7 @@
 #define xtd_event_system_hpp
 
 #include <cstddef>
+#include <functional>
 #include <unordered_map>
 #include <memory>
 
@@ -25,23 +26,27 @@ namespace evt
 
         std::unique_ptr<xtd::id_t> pred_id;
         subscriptions_map subscriptions_map;
+        unsubscription_map unsubscription_map;
 
     protected:
 
         ENABLE_CAST(xtd::castable, eventable<P>)
 
         template<typename P>
-        friend xtd::id_t provide_subscription_id(P& program);
+        friend xtd::id_t get_subscription_id(P& program);
+
+        template<typename P>
+        friend void unsubscribe_event(P& program, xtd::id_t subscription_id);
 
         template<typename T, typename P>
-        friend void subscribe_event5(P& program, xtd::id_t subscription_id, const address& address, const std::shared_ptr<addressable>& subscriber, const handler<T, P>& handler);
+        friend std::function<void(P&)> subscribe_event5(P& program, const handler<T, P>& handler, const address& address, const std::shared_ptr<addressable>& subscriber, xtd::id_t subscription_id);
 
         template<typename T, typename P>
         friend void publish_event(P& program, const T& event_data, const address& address, const std::shared_ptr<addressable>& publisher);
 
     public:
 
-        eventable() : pred_id(std::make_unique<xtd::id_t>()), subscriptions_map() { }
+        eventable() : pred_id(std::make_unique<xtd::id_t>()), subscriptions_map(), unsubscription_map() { }
         eventable(const eventable& that) = delete;
         eventable(eventable&& that) = delete;
         eventable& operator=(const eventable& that) = delete;
@@ -49,7 +54,7 @@ namespace evt
     };
 
     template<typename P>
-    xtd::id_t provide_subscription_id(P& program)
+    xtd::id_t get_subscription_id(P& program)
     {
         const auto pred_id(*program.pred_id);
         const auto succ_id(xtd::succ(pred_id));
@@ -57,8 +62,29 @@ namespace evt
         return succ_id;
     }
 
+    template<typename P>
+    void unsubscribe_event(P& program, xtd::id_t subscription_id)
+    {
+        const auto& unsubscription_opt(program.unsubscription_map.find(subscription_id));
+        if (unsubscription_opt != program.unsubscription_map.end())
+        {
+            const auto& subscriptions_opt(program.subscriptions_map.find(unsubscription_opt->second.first));
+            if (subscriptions_opt != program.subscriptions_map.end())
+            {
+                auto& subscriptions = *subscriptions_opt->second;
+                subscriptions.erase(
+                    std::remove_if(
+                        subscriptions.begin(),
+                        subscriptions.end(),
+                        [unsubscription_opt](const auto& subscription)
+                        { return subscription->subscriber_opt.lock().get() == unsubscription_opt->second.second.lock().get(); }));
+                program.unsubscription_map.erase(unsubscription_opt);
+            }
+        }
+    }
+
     template<typename T, typename P>
-    void subscribe_event5(P& program, xtd::id_t subscription_id, const address& address, const std::shared_ptr<addressable>& subscriber, const handler<T, P>& handler)
+    std::function<void(P&)> subscribe_event5(P& program, const handler<T, P>& handler, const address& address, const std::shared_ptr<addressable>& subscriber, xtd::id_t subscription_id)
     {
         auto subscription_detail(xtd::cast_unique<xtd::castable>(std::make_unique<subscription_detail<T, P>>(handler)));
         const auto subscription(std::make_shared<subscription>(subscription_id, subscriber, std::move(subscription_detail)));
@@ -73,12 +99,14 @@ namespace evt
             subscriptions->push_back(subscription);
             program.subscriptions_map.insert(std::make_pair(address::address(address), std::move(subscriptions)));
         }
+        program.unsubscription_map.insert(std::make_pair(subscription_id, std::make_pair(address, subscriber)));
+        return [subscription_id](P& program){ unsubscribe_event(program, subscription_id); };
     }
 
     template<typename T, typename P>
-    void subscribe_event(P& program, const handler<T, P>& handler, const address& address, const std::shared_ptr<addressable>& subscriber)
+    std::function<void(P&)> subscribe_event(P& program, const handler<T, P>& handler, const address& address, const std::shared_ptr<addressable>& subscriber)
     {
-        subscribe_event5<T, P>(program, evt::provide_subscription_id(program), address, subscriber, handler);
+        return subscribe_event5<T, P>(program, handler, address, subscriber, evt::get_subscription_id(program));
     }
 
     template<typename T, typename P>

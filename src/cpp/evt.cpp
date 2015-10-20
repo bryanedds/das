@@ -32,19 +32,25 @@ namespace prg
 int main(int, char*[])
 {
     /// instantiate the event program
-    prg::event_program event_program;
+    prg::event_program program;
 
     /// instantiate an event participant
     std::shared_ptr<prg::addressable> participant(std::make_shared<prg::addressable>(xtd::name_t("participant")));
 
     /// construct our event handler to just printf
-    prg::handler<std::string> handler([](auto&, const auto& event) { printf(event.data.c_str()); return true; });
+    prg::handler<std::string> handler([](auto&, const auto& event) { printf("%s\r\n", event.data.c_str()); return true; });
 
-    /// subscribe to the "signal" event with our handler
-    prg::subscribe_event(event_program, handler, prg::address("event"), participant);
+    /// subscribe to an event with our handler
+    auto unsubscribe(prg::subscribe_event(program, handler, prg::address("event"), participant));
 
     /// publish the event!
-    prg::publish_event(event_program, std::string("Event handled!"), prg::address("event"), participant);
+    prg::publish_event(program, std::string("Event handled!"), prg::address("event"), participant);
+
+    /// unsubscribe from the event
+    unsubscribe(program);
+
+    /// publish the event again, but to no effect
+    prg::publish_event(program, std::string("Event handled!"), prg::address("event"), participant);
 
     /// great success!
     return 0;

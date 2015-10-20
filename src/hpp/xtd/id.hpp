@@ -45,6 +45,32 @@ namespace xtd
         }
         return id_t(succ(id.x), id.y);
     }
+
+    std::size_t get_hash_code(const id_t& id)
+    {
+        return id.x ^ id.y;
+    }
+}
+
+namespace std
+{
+    template<>
+    struct hash<xtd::id_t>
+    {
+        std::size_t operator()(const xtd::id_t& id) const
+        {
+            return xtd::get_hash_code(id);
+        }
+    };
+
+    template<>
+    struct equal_to<xtd::id_t>
+    {
+        std::size_t operator()(const xtd::id_t& left, const xtd::id_t& right) const
+        {
+            return left == right;
+        }
+    };
 }
 
 #endif

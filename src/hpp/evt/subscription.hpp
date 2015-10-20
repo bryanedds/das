@@ -5,7 +5,7 @@
 #include <cassert>
 #include <memory>
 #include <functional>
-#include <list>
+#include <vector>
 #include <unordered_map>
 
 #include "../xtd/prelude.hpp"
@@ -87,9 +87,11 @@ namespace evt
         return true;
     }
 
-    using subscription_list = std::list<std::shared_ptr<subscription>>;
+    using subscription_list = std::vector<std::shared_ptr<subscription>>;
 
     using subscriptions_map = std::unordered_map<address, std::unique_ptr<subscription_list>>;
+
+    using unsubscription_map = std::unordered_map<xtd::id_t, std::pair<address, std::weak_ptr<addressable>>>;
 }
 
 #endif
