@@ -27,9 +27,11 @@ namespace tut
     // So let's get started!
 
     // Here we have a data abstraction, or 'DA'. You can tell it is different from an OOP object as
-    // it has no public functions (save for ctors, dtors, and operators). Its advantages are that
-    // it should keep you from using OOP unnecessarily, and has better generic usage (especially
-    // with respect to the following forms of polymorphism).
+    // it has no public functions (save for ctors, dtors, and operators). Its has better generic
+    // usage (especially with respect to the above preferred forms of polymorphism) and exposes a
+    // much simpler and more extensible interface. Adding a new functions to DAs is as easy as
+    // opening up its containing namespace and plopping on in, as opposed to using inheritance to
+    // add a new object member function.
     //
     // Also unlike objects, DA's only do what they must in order to implement a localized
     // semantics, rather than as much as they can for the wider system.
@@ -42,8 +44,8 @@ namespace tut
     // specialized systems to manage resources and perform the tasks that the data messages
     // describe.
     //
-    // The downside to DAs is that they are considered novel in some C++ shops, and their adoption
-    // may therefore pose political difficulties.
+    // The downside to DAs is that they are considered novel in some C++ shops, and may therfore
+    // pose adoption difficulties in practice.
     class data_abstraction
     {
     private:
@@ -65,18 +67,17 @@ namespace tut
         data_abstraction(int value) : value(value) { }
     };
 
-    // Here we write forwarding functions for our DA's functions. Exposing the interface like
-    // this will provide us the additional genericity that is accompanied by ad-hoc polymorphism
-    // (AKA, operator-overloading). Stand-alone functions are considered preferable to member
-    // functions for many reasons. See http://www.gotw.ca/gotw/084.htm and
+    // Here we expose our DA's interface with stand-alone functions. For more on why Stand-alone
+    // functions are considered strictly superior to OO-style member functions, see -
+    // http://www.gotw.ca/gotw/084.htm and -
     // http://www.drdobbs.com/cpp/how-non-member-functions-improve-encapsu/184401197
     int func(const data_abstraction& da)
     {
         return da.value * 5;
     }
 
-    // Unlike with OOP in C++, extending a DA is easy; just add a function in the same namesapce
-    // as the DA, and you're done! Look ma, no inheritance!
+    // Unlike with OO interfaces, extending a DA is easy; even if you're in a different file or
+    // code base, just open up the DA's namespace and add functions to you heart's content!
     int extension(const data_abstraction& da)
     {
         return func(da) + 5;
