@@ -13,7 +13,8 @@
 namespace xtd
 {
     // TODO: rename prop to prop_generic and insert a reflective type called prop between it and
-    // castable. Also make prop_map hold the new prop type instead of castable.
+    // castable. Props will be serializable to Nu-style algebraic expressions. Also make prop_map
+    // hold the new prop type instead of castable.
     template<typename T>
     class prop : castable
     {
