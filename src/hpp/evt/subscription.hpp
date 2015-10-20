@@ -81,8 +81,9 @@ namespace evt
         {
             const auto subscriber(subscription.subscriber_opt.lock());
             const auto event(event<T>(event_data, event_address, subscriber, publisher));
-            const auto& subscription_detail(xtd::cast_ref_const<subscription_detail<T, P>>(*subscription.subscription_detail));
-            return subscription_detail(program, event);
+            const auto* subscription_detail_opt(xtd::try_cast_const<subscription_detail<T, P>>(subscription.subscription_detail.get()));
+            if (subscription_detail_opt) return (*subscription_detail_opt)(program, event);
+            return true;
         }
         return true;
     }
