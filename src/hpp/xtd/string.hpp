@@ -6,6 +6,18 @@
 
 #include "prelude.hpp"
 
+// We need to allow operator""s in the global namespace...
+#pragma warning(disable: 4455)
+
+// This should also be in the global namespace...
+inline std::string operator ""s(const char *str, std::size_t len)
+{
+    return std::string(str, len);
+}
+
+// Restore our warning, of course.
+#pragma warning(default: 4455)
+
 namespace xtd
 {
     // Split a string on a char delimiter.

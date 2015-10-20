@@ -6,7 +6,7 @@
 #include <iostream>
 
 #include "../hpp/xtd/prelude.hpp"
-#include "../hpp/xtd/castable.hpp"
+#include "../hpp/xtd/string.hpp"
 #include "../hpp/evt/addressable.hpp"
 #include "../hpp/evt/address.hpp"
 #include "../hpp/evt/eventable.hpp"
@@ -34,23 +34,27 @@ int main(int, char*[])
     /// instantiate the event program
     prg::event_program program;
 
+    /// contrive an event for publishing
+    auto event_address = prg::address("event");
+
     /// instantiate an event participant
-    const auto& participant(std::make_shared<prg::addressable>(xtd::name_t("participant")));
+    auto participant = std::make_shared<prg::addressable>(xtd::name_t("participant"));
 
-    /// construct our event handler to just printf
-    const auto& handler([](auto&, const auto& event) { printf("%s\r\n", event.data.c_str()); return true; });
-
-    /// subscribe to an event with our handler
-    const auto& unsubscribe(prg::subscribe_event<std::string, prg::event_program>(program, handler, prg::address("event"), participant));
+    /// subscribe to an event with a printf handler that returns true to allow the event to propagate to any downstream handlers
+    auto unsubscribe = prg::subscribe_event<std::string, prg::event_program>(program, event_address, participant, [](auto&, const auto& event)
+    {
+        printf("%s\r\n", event.data.c_str());
+        return true;
+    });
 
     /// publish the event!
-    prg::publish_event(program, std::string("Event handled!"), prg::address("event"), participant);
+    prg::publish_event(program, "Event handled!"s, event_address, participant);
 
     /// unsubscribe from the event
     unsubscribe(program);
 
     /// publish the event again, but to no effect
-    prg::publish_event(program, std::string("Event handled!"), prg::address("event"), participant);
+    prg::publish_event(program, "Event unhandled."s, event_address, participant);
 
     /// great success!
     return 0;

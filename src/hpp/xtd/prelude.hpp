@@ -1,12 +1,20 @@
 #ifndef xtd_prelude_hpp
 #define xtd_prelude_hpp
 
-#include <cstdlib>
-#include <iterator>
+#include <cstddef>
+
+// We need to allow operator""z in the global namespace...
+#pragma warning(disable: 4455)
 
 // Enable std::size_t literals.
 // Hopefully can be replaced with a built-in operator""z soon.
-constexpr std::size_t operator""_z(unsigned long long n) { return static_cast<std::size_t>(n); }
+constexpr std::size_t operator""z(unsigned long long n)
+{
+    return static_cast<std::size_t>(n);
+}
+
+// Restore our warning, of course.
+#pragma warning(default: 4455)
 
 namespace xtd
 {
