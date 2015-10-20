@@ -19,7 +19,7 @@
 namespace evt
 {
     template<typename T, typename P>
-    using handler = std::function<bool(P&, const event<T>&)>;
+    using handler = std::function<bool(const event<T>&, P&)>;
 
     template<typename T, typename P>
     class subscription_detail : public xtd::castable
@@ -33,6 +33,9 @@ namespace evt
         using subscription_detailTC = subscription_detail<T, P>;
         ENABLE_CAST(xtd::castable, subscription_detailTC)
 
+        template<typename T, typename P>
+        friend bool publish_subscription_detail(const subscription_detail<T, P>& subscription_detail, const evt::event<T>& event, P& program);
+
     public:
 
         subscription_detail() = delete;
@@ -40,19 +43,20 @@ namespace evt
         subscription_detail(const subscription_detail& that) = delete;
         subscription_detail(subscription_detail&& that) = delete;
         subscription_detail& operator=(const subscription_detail& that) = delete;
-
-        bool operator()(P& program, const evt::event<T>& event) const
-        {
-            return handler(program, event);
-        }
     };
+
+    template<typename T, typename P>
+    bool publish_subscription_detail(const subscription_detail<T, P>& subscription_detail, const evt::event<T>& event, P& program)
+    {
+        return subscription_detail.handler(event, program);
+    }
 
     class subscription
     {
     protected:
 
         template<typename T, typename P>
-        friend bool publish_subscription(const subscription& subscription, P& program, const T& event_data, const address& event_address, const std::shared_ptr<addressable>& publisher);
+        friend bool publish_subscription(const subscription& subscription, const T& event_data, const address& event_address, const std::shared_ptr<addressable>& publisher, P& program);
 
     public:
 
@@ -75,14 +79,14 @@ namespace evt
     };
 
     template<typename T, typename P>
-    bool publish_subscription(const subscription& subscription, P& program, const T& event_data, const address& event_address, const std::shared_ptr<addressable>& publisher)
+    bool publish_subscription(const subscription& subscription, const T& event_data, const address& event_address, const std::shared_ptr<addressable>& publisher, P& program)
     {
         if (!subscription.subscriber_opt.expired())
         {
             const auto subscriber(subscription.subscriber_opt.lock());
             const auto event(event<T>(event_data, event_address, subscriber, publisher));
             const auto* subscription_detail_opt(xtd::try_cast_const<subscription_detail<T, P>>(subscription.subscription_detail.get()));
-            if (subscription_detail_opt) return (*subscription_detail_opt)(program, event);
+            if (subscription_detail_opt) return publish_subscription_detail(*subscription_detail_opt, event, program);
             return true;
         }
         return true;

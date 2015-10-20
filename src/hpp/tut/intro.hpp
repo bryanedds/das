@@ -136,6 +136,8 @@ namespace tut
     {
         return a + b + c;
     }
+
+    // TODO: mixin example.
 }
 
 #endif

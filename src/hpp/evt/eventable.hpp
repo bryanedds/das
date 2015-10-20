@@ -121,7 +121,7 @@ namespace evt
             auto subscriptions_copy(*subscriptions_opt->second);
             for (const auto& subscription : subscriptions_copy)
             {
-                const auto cascade(publish_subscription<T, P>(*subscription, program, event_data, event_address, publisher));
+                const auto cascade(publish_subscription<T, P>(*subscription, event_data, event_address, publisher, program));
                 if (!cascade) break;
             }
         }

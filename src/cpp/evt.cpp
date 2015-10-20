@@ -41,7 +41,7 @@ int main(int, char*[])
     auto participant = std::make_shared<prg::addressable>(xtd::name_t("participant"));
 
     /// subscribe to an event with a printf handler that returns true to allow the event to propagate to any downstream handlers
-    auto unsubscribe = prg::subscribe_event<std::string, prg::event_program>(program, event_address, participant, [](auto&, const auto& event)
+    auto unsubscribe = prg::subscribe_event<std::string, prg::event_program>(program, event_address, participant, [](const auto& event, auto&)
     {
         printf("%s\r\n", event.data.c_str());
         return true;
