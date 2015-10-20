@@ -46,15 +46,6 @@
     <ClInclude Include="src\hpp\evt\subscription.hpp">
       <Filter>Header Files\evt</Filter>
     </ClInclude>
-    <ClInclude Include="src\hpp\tut\injection.hpp">
-      <Filter>Header Files\tut</Filter>
-    </ClInclude>
-    <ClInclude Include="src\hpp\tut\polymorphism.hpp">
-      <Filter>Header Files\tut</Filter>
-    </ClInclude>
-    <ClInclude Include="src\hpp\tut\safety.hpp">
-      <Filter>Header Files\tut</Filter>
-    </ClInclude>
     <ClInclude Include="src\hpp\xtd\castable.hpp">
       <Filter>Header Files\xtd</Filter>
     </ClInclude>
@@ -78,6 +69,9 @@
     </ClInclude>
     <ClInclude Include="src\hpp\evt\eventable.hpp">
       <Filter>Header Files\evt</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hpp\tut\intro.hpp">
+      <Filter>Header Files\tut</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

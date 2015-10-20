@@ -6,7 +6,7 @@
 
 namespace tut
 {
-    // This tutorial gives an overview of the data abstraction-style in C++ (DAS).
+    // This tutorial gives an introduction of the data abstraction-style in C++ (DAS).
     //
     // DAS is a simple, powerful, composable, and efficient style of C++ programming. It is the
     // combination of four major implementation techniques -
