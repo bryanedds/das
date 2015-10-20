@@ -4,7 +4,7 @@ DAS - Data Abstraction-Style in C++
 A Tutorial, Library, and Sample Program done in the Data Abstraction-Style.
 --------------------------------------------------------------------------
 
-In the 'Notes to the Reader' section 1.2.1 on page 11, Bjarne Stroustrup mentions the four major supported styles of programming in C++ -
+In the 'Notes to the Reader' section 1.2.1 on page 11 of 'The C++ Programming Language', Bjarne Stroustrup mentions the four major supported styles of programming in C++ -
 
 - Procedural programming
 - Data abstraction
