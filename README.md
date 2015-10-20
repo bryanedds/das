@@ -1,7 +1,7 @@
-DAS
+DAS - Data Abstraction Style in C++
 ===
 
-A Tutorial, Library, and Sample Program written in the C++ Data Abstraction Style.
+A Tutorial, Library, and Sample Program written in the Data Abstraction Style.
 --------------------------------------------------------------------------
 
 In the 'Notes to the Reader' section 1.2.1 on page 11, Bjarne Stroustrup mentions the four major supported styles of programming in C++ -
