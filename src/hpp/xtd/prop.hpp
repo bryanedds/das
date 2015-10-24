@@ -57,10 +57,7 @@ namespace xtd
     {
         return prop = value;
     }
-}
 
-namespace xtd
-{
     using prop_map = std::unordered_map<name_t, std::unique_ptr<castable>>;
 
     template<typename T>
