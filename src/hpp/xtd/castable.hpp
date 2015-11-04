@@ -9,7 +9,7 @@
 
 namespace xtd
 {
-    // A mixin for enabling down casts without resorting to dynamic_cast.
+    // A mixin for enabling down casts without resorting to inefficient dynamic_casts.
     class castable
     {
     protected:
@@ -24,6 +24,20 @@ namespace xtd
         {
             if (type_name == typeid(castable).name()) return static_cast<void*>(this);
             return nullptr;
+        }
+
+        template<typename T, typename S>
+        void const* try_cast_const_impl(const char* type_name) const
+        {
+            if (type_name == typeid(T).name()) return static_cast<const void*>(this);
+                return S::try_cast_const(type_name);
+        }
+
+        template<typename T, typename S>
+        void* try_cast_impl(const char* type_name)
+        {
+            if (type_name == typeid(T).name()) return static_cast<void*>(this);
+                return S::try_cast(type_name);
         }
 
         template<typename T>
@@ -116,19 +130,5 @@ namespace xtd
         throw std::logic_error("Invalid cast.");
     }
 }
-
-#define ENABLE_CAST(S, T) \
-    \
-    void const* try_cast_const(const char* type_name) const override \
-    { \
-        if (type_name == typeid(T).name()) return static_cast<const void*>(this); \
-        return S::try_cast_const(type_name); \
-    } \
-    \
-    void* try_cast(const char* type_name) override \
-    { \
-        if (type_name == typeid(T).name()) return static_cast<void*>(this); \
-        return S::try_cast(type_name); \
-    }
 
 #endif

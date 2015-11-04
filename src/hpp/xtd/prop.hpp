@@ -24,7 +24,15 @@ namespace xtd
 
     protected:
 
-        ENABLE_CAST(castable, prop<T>)
+        void const* try_cast_const(const char* type_name) const override
+        {
+            return try_cast_const_impl<prop<T>, castable>(type_name);
+        }
+
+        void* try_cast(const char* type_name) override
+        {
+            return try_cast_impl<prop<T>, castable>(type_name);
+        }
 
     public:
 

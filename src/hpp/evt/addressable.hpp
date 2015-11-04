@@ -15,7 +15,7 @@ namespace evt
     // addressable needs a different name, the policy is to copy it with a different name, then
     // discard the original. This actually works best in simulators because trying to implement
     // mutable identities is overly complicating in practice.
-    class addressable : public xtd::castable
+    class addressable : public virtual xtd::castable
     {
     private:
 
@@ -23,7 +23,15 @@ namespace evt
 
     protected:
 
-        ENABLE_CAST(castable, addressable)
+        void const* try_cast_const(const char* type_name) const override
+        {
+            return try_cast_const_impl<addressable, castable>(type_name);
+        }
+
+        void* try_cast(const char* type_name) override
+        {
+            return try_cast_impl<addressable, castable>(type_name);
+        }
 
         friend xtd::name_t get_name(const addressable& addressable);
 

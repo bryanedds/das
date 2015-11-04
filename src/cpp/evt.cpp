@@ -21,7 +21,15 @@ namespace prg
     {
     protected:
 
-        ENABLE_CAST(evt::eventable<event_program>, event_program)
+        void const* try_cast_const(const char* type_name) const override
+        {
+            return try_cast_const_impl<event_program, evt::eventable<event_program>>(type_name);
+        }
+
+        void* try_cast(const char* type_name) override
+        {
+            return try_cast_impl<event_program, evt::eventable<event_program>>(type_name);
+        }
     };
 
     // Shadow evt::handler with a simplified form.

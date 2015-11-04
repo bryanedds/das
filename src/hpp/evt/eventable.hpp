@@ -23,7 +23,7 @@ namespace evt
     // Well, it's like any other C++ mixin, except it's intended for use on the type that end-user
     // will represent his program with. Program mixins are the good alternative to OOP Singletons.
     template<typename P>
-    class eventable : public xtd::castable
+    class eventable : public virtual xtd::castable
     {
     private:
 
@@ -33,7 +33,15 @@ namespace evt
 
     protected:
 
-        ENABLE_CAST(xtd::castable, eventable<P>)
+        void const* try_cast_const(const char* type_name) const override
+        {
+            return try_cast_const_impl<eventable<P>, xtd::castable>(type_name);
+        }
+
+        void* try_cast(const char* type_name) override
+        {
+            return try_cast_impl<eventable<P>, xtd::castable>(type_name);
+        }
 
         template<typename P>
         friend xtd::id_t get_subscription_id(P& program);
