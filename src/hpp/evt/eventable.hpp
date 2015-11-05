@@ -85,8 +85,8 @@ namespace evt
                 auto& subscriptions = *subscriptions_opt->second;
                 subscriptions.erase(
                     std::remove_if(
-                        subscriptions.begin(),
-                        subscriptions.end(),
+                        std::begin(subscriptions),
+                        std::end(subscriptions),
                         [unsubscription_opt](const auto& subscription)
                         { return subscription->subscriber_opt.lock().get() == unsubscription_opt->second.second.lock().get(); }));
                 program.unsubscription_map.erase(unsubscription_opt);
