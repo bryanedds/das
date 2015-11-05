@@ -19,7 +19,7 @@ namespace tut
     // 4) the following types of polymorphism rather than OOP polymorphism -
     //      a) ad-hoc polymorphism (function overloading)
     //      b) structural polymorphism (function templates without specialization)
-    //      c) static polymorphisms (function template with specialization)
+    //      c) static polymorphisms (function templates with specialization)
     //
     // Subtype polymorphism should be used only when necessary, such as in mixins and plugins.
     // 
@@ -69,8 +69,8 @@ namespace tut
     };
 
     // Here we expose our DA's interface with stand-alone functions. Stand-alone functions are
-    // preferable to methods because they are much more amenable to use in generic programming. For
-    // more on this see - http://www.gotw.ca/gotw/084.htm and -
+    // preferable to member functions because they are much more amenable to use in generic
+    // programming. For more on this see - http://www.gotw.ca/gotw/084.htm and -
     // http://www.drdobbs.com/cpp/how-non-member-functions-improve-encapsu/184401197
     int func(const data_abstraction& da)
     {
