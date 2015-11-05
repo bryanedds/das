@@ -30,12 +30,12 @@ int main(int, char*[])
     std::cout << tut::op('3', '5');
 
     /// make a widget, and cast it back and forth
-    auto widget = std::make_unique<tut::widget>(12345, true);
+    auto widget = std::make_unique<tut::widget>(12345, 101.0f, true);
     auto castable = xtd::cast_unique<xtd::castable>(std::move(widget));
     auto widget_again = xtd::cast_unique<tut::widget>(std::move(castable));
 
     /// check its replacability :)
-    std::cout << tut::can_replace(*widget_again, 12345);
+    std::cout << tut::should_replace_with(*widget_again, 100.0f, 12345);
     return 0;
 }
 

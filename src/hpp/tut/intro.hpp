@@ -24,7 +24,7 @@ namespace tut
     // Subtype polymorphism should be used only when necessary, such as in mixins and plugins.
     // 
     // In these tutorial and with the library code provided in this repository, I hope to
-    // demonstrate the superiority of DAS programming in C++ over its OOP alternative.
+    // demonstrate the validity of DAS programming in C++ as an alternative to OOP.
     //
     // So let's get started!
 
@@ -169,30 +169,45 @@ namespace tut
     private:
 
         const int upc;
+        const float age;
         const bool replacable;
 
     protected:
 
+        // Override xtd::castable::try_cast_const.
         void const* try_cast_const(const char* type_name) const override
         {
             return try_cast_const_impl<castable>(this, type_name);
         }
 
+        // Override xtd::castable::try_cast.
         void* try_cast(const char* type_name) override
         {
             return try_cast_impl<castable>(this, type_name);
         }
 
-        friend bool can_replace(const widget& widget, int upc);
+        // Our interface functions.
+        friend int get_upc(const widget& widget);
+        friend bool should_replace(const widget& widget, float age_max);
 
     public:
 
-        widget(int upc, bool replacable) : upc(upc), replacable(replacable) { }
+        widget(int upc, float age, bool replacable) : upc(upc), age(age), replacable(replacable) { }
     };
 
-    bool can_replace(const widget& widget, int upc)
+    int get_upc(const widget& widget)
     {
-        return widget.replacable && widget.upc == upc;
+        return widget.upc;
+    }
+
+    bool should_replace(const widget& widget, float age_max)
+    {
+        return widget.replacable && widget.age > age_max;
+    }
+
+    bool should_replace_with(const widget& widget, float age_max, int upc)
+    {
+        return should_replace(widget, age_max) && get_upc(widget) == upc;
     }
 }
 
