@@ -4,6 +4,8 @@
 #include <cstddef>
 #include <functional>
 
+#include "../xtd/castable.hpp"
+
 namespace tut
 {
     // This tutorial gives an introduction to the data abstraction-style in C++ (DAS).
@@ -155,7 +157,43 @@ namespace tut
     // 2) Virtual try_cast functions, with default template impl functions to ease overriding.
     // 3) A complete public interface, including usage with smart ptrs.
     //
-    // ...
+    // The following is a type that leverages the castable mixin -
+    // A mixin for making a type addressable.
+    //
+    // The policy hard-wired into this mixin is that an addressable's name cannot change. If an
+    // addressable needs a different name, the policy is to copy it with a different name, then
+    // discard the original. This actually works best in simulators because trying to implement
+    // mutable identities is overly complicating in practice.
+    class widget : public virtual xtd::castable
+    {
+    private:
+
+        const int upc;
+        const bool replacable;
+
+    protected:
+
+        void const* try_cast_const(const char* type_name) const override
+        {
+            return try_cast_const_impl<castable>(this, type_name);
+        }
+
+        void* try_cast(const char* type_name) override
+        {
+            return try_cast_impl<castable>(this, type_name);
+        }
+
+        friend bool can_replace(const widget& widget, int upc);
+
+    public:
+
+        widget(int upc, bool replacable) : upc(upc), replacable(replacable) { }
+    };
+
+    bool can_replace(const widget& widget, int upc)
+    {
+        return widget.replacable && widget.upc == upc;
+    }
 }
 
 #endif

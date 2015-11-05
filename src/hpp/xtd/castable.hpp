@@ -26,17 +26,17 @@ namespace xtd
             return nullptr;
         }
 
-        template<typename T, typename S>
-        void const* try_cast_const_impl(const char* type_name) const
+        template<typename S, typename T>
+        void const* try_cast_const_impl(const T* self, const char* type_name) const
         {
-            if (type_name == typeid(T).name()) return static_cast<const void*>(this);
+            if (type_name == typeid(T).name()) return static_cast<const void*>(self);
                 return S::try_cast_const(type_name);
         }
 
-        template<typename T, typename S>
-        void* try_cast_impl(const char* type_name)
+        template<typename S, typename T>
+        void* try_cast_impl(T* self, const char* type_name)
         {
-            if (type_name == typeid(T).name()) return static_cast<void*>(this);
+            if (type_name == typeid(T).name()) return static_cast<void*>(self);
                 return S::try_cast(type_name);
         }
 
@@ -115,18 +115,26 @@ namespace xtd
     }
 
     template<typename U, typename T>
-    std::unique_ptr<U> try_cast_unique(std::unique_ptr<T> source)
+    std::unique_ptr<U> try_cast_unique(std::unique_ptr<T>&& source)
     {
-        U* u_opt = try_cast<U>(source.release());
-        if (u_opt) return std::unique_ptr<U>(source, u_opt);
+        U* u_opt = try_cast<U>(source.get());
+        if (u_opt)
+        {
+            source.release();
+            return std::unique_ptr<U>(u_opt);
+        }
         return std::unique_ptr<U>();
     }
 
     template<typename U, typename T>
-    std::unique_ptr<U> cast_unique(std::unique_ptr<T> source)
+    std::unique_ptr<U> cast_unique(std::unique_ptr<T>&& source)
     {
-        U* u_opt = try_cast<U>(source.release());
-        if (u_opt) return std::unique_ptr<U>(u_opt);
+        U* u_opt = try_cast<U>(source.get());
+        if (u_opt)
+        {
+            source.release();
+            return std::unique_ptr<U>(u_opt);
+        }
         throw std::logic_error("Invalid cast.");
     }
 }

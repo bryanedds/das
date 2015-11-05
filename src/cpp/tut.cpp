@@ -1,6 +1,7 @@
 #ifdef TUT_CPP
 
 #include <cstddef>
+#include <memory>
 #include <functional>
 #include <string>
 #include <iostream>
@@ -27,6 +28,14 @@ int main(int, char*[])
     std::cout << tut::op(3, 5);
     std::cout << tut::op(3.0f, 5.0f);
     std::cout << tut::op('3', '5');
+
+    /// make a widget, and cast it back and forth
+    auto widget = std::make_unique<tut::widget>(12345, true);
+    auto castable = xtd::cast_unique<xtd::castable>(std::move(widget));
+    auto widget_again = xtd::cast_unique<tut::widget>(std::move(castable));
+
+    /// check its replacability :)
+    std::cout << tut::can_replace(*widget_again, 12345);
     return 0;
 }
 

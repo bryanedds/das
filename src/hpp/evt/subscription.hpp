@@ -32,12 +32,12 @@ namespace evt
 
         void const* try_cast_const(const char* type_name) const override
         {
-            return try_cast_const_impl<subscription_detail<T, P>, xtd::castable>(type_name);
+            return try_cast_const_impl<xtd::castable>(this, type_name);
         }
 
         void* try_cast(const char* type_name) override
         {
-            return try_cast_impl<subscription_detail<T, P>, xtd::castable>(type_name);
+            return try_cast_impl<xtd::castable>(this, type_name);
         }
 
         template<typename T, typename P>
