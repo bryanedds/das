@@ -17,7 +17,7 @@ For the rest of the book, and for the rest of all C++ literature I've encountere
 
 However, as the world wakes up to the broken promises of object-orientation, it is the time to revisit this lesser discussed concept of data abstraction.
 
-In this repository, I give a strong and precise definition of data abstraction, and data-abstraction-style in C++. Additionally, I build both a very small standard library called 'xtd' as well as a publisher-neutral event system called 'evt', as well as a toy demo program. All of these are implemented in the data abstraction-style. The result has been code that is simpler, more efficient, and more general than code implemented in the object-oriented style.
+In this repository, I give a strong and precise definition of data abstraction, and data-abstraction-style in C++. Additionally, I build both a very small standard library called 'xtd' as well as a publisher-neutral event system called 'evt', as well as a toy demo program. All of these are implemented in the data abstraction-style. The result has been code that is simpler, more efficient, and more generic than code implemented in the object-oriented style.
 
 To get started, begin by reading the first literate tutorial here - https://github.com/bryanedds/das/blob/master/src/hpp/tut/tut.hpp
 
