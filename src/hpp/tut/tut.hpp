@@ -197,6 +197,8 @@ namespace tut
     {
         return should_replace(widget, age_max) && get_upc(widget) == upc;
     }
+
+    // Now to see all this code in action, let us turn to '../../cpp/tut.cpp'!
 }
 
 #endif
