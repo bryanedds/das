@@ -127,17 +127,6 @@ namespace tut
         return a / b;
     }
 
-    // Note that function templates shadow rather than overload, so if you want to have the same
-    // generic function with a different number of parameters, you do as the standard library does
-    // and suffix the name with the number parameters. This is the same approach as taken in most
-    // functional languages. Usually the original function remains un-numbered, so you can apply
-    // this after-the-fact.
-    template<typename T>
-    T op3(const T& a, const T& b, const T& c)
-    {
-        return a + b + c;
-    }
-
     // As you can see, a great variety of computation and program characteristics can be cleanly,
     // efficiently, and most importantly _generically_ expressed using just the above concepts.
     // However, we will still need late-binding to achieve certain types of abstractions. This
