@@ -15,7 +15,7 @@ namespace tut
     //
     // 1) data abstractions rather than OOP objects
     // 2) stand-alone functions rather than member functions
-    // 3) opaque mixins rather than OOP inheritance
+    // 3) composable mixins rather than OOP inheritance
     // 4) the following types of polymorphism rather than OOP polymorphism -
     //      a) ad-hoc polymorphism (function overloading)
     //      b) structural polymorphism (function templates without specialization)
@@ -148,23 +148,16 @@ namespace tut
     // Mixins in this context are a bit different than what most C++ articles about mixins present.
     // Rather than being programming components that allow the injection of capabilities into a
     // class a posteriori via template arguments, our mixins are simple data abstractions that each
-    // provide a single orthogonal capability to another data abstraction (itself possibly another
-    // mixin) via inheritance.
+    // provide a single orthogonal capability to another data abstraction via inheritance.
     //
     // A good example of a mixin is implemented in '../hpp/xtd/castable.hpp'. By inheriting from
     // this mixin, you get dynamic castability capabilities via -
     // 1) A common base type xtd::castable.
     // 2) Virtual try_cast functions, with default template impl functions to ease overriding.
-    // 3) A complete public interface, including usage with smart ptrs.
+    // 3) A completely general public interface, including casting with smart ptrs.
     //
     // The following is a type that leverages the castable mixin -
-    // A mixin for making a type addressable.
-    //
-    // The policy hard-wired into this mixin is that an addressable's name cannot change. If an
-    // addressable needs a different name, the policy is to copy it with a different name, then
-    // discard the original. This actually works best in simulators because trying to implement
-    // mutable identities is overly complicating in practice.
-    class widget : public virtual xtd::castable
+    class widget : public xtd::castable
     {
     private:
 
@@ -174,37 +167,43 @@ namespace tut
 
     protected:
 
-        // Override xtd::castable::try_cast_const.
+        // Override xtd::castable::try_cast_const from mixin.
         void const* try_cast_const(const char* type_name) const override
         {
             return try_cast_const_impl<castable>(this, type_name);
         }
 
-        // Override xtd::castable::try_cast.
+        // Override xtd::castable::try_cast from mixin.
         void* try_cast(const char* type_name) override
         {
             return try_cast_impl<castable>(this, type_name);
         }
 
-        // Our interface functions.
         friend int get_upc(const widget& widget);
         friend bool should_replace(const widget& widget, float age_max);
 
     public:
 
-        widget(int upc, float age, bool replacable) : upc(upc), age(age), replacable(replacable) { }
+        // Construct our widget.
+        widget(int upc, float age, bool replacable) :
+            upc(upc),
+            age(age),
+            replacable(replacable) { }
     };
 
+    // Get the upc of a widget.
     int get_upc(const widget& widget)
     {
         return widget.upc;
     }
 
+    // Query that a widget should be replaced.
     bool should_replace(const widget& widget, float age_max)
     {
         return widget.replacable && widget.age > age_max;
     }
 
+    // Query that a widget should be replaced with a give product.
     bool should_replace_with(const widget& widget, float age_max, int upc)
     {
         return should_replace(widget, age_max) && get_upc(widget) == upc;
