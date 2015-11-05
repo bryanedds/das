@@ -70,7 +70,7 @@
     <ClInclude Include="src\hpp\evt\eventable.hpp">
       <Filter>Header Files\evt</Filter>
     </ClInclude>
-    <ClInclude Include="src\hpp\tut\intro.hpp">
+    <ClInclude Include="src\hpp\tut\tut.hpp">
       <Filter>Header Files\tut</Filter>
     </ClInclude>
   </ItemGroup>

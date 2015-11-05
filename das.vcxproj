@@ -29,7 +29,7 @@
     <ClInclude Include="src\hpp\evt\event.hpp" />
     <ClInclude Include="src\hpp\evt\eventable.hpp" />
     <ClInclude Include="src\hpp\evt\subscription.hpp" />
-    <ClInclude Include="src\hpp\tut\intro.hpp" />
+    <ClInclude Include="src\hpp\tut\tut.hpp" />
     <ClInclude Include="src\hpp\xtd\castable.hpp" />
     <ClInclude Include="src\hpp\xtd\id.hpp" />
     <ClInclude Include="src\hpp\xtd\hash.hpp" />

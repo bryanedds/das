@@ -6,7 +6,7 @@
 #include <string>
 #include <iostream>
 
-#include "../hpp/tut/intro.hpp"
+#include "../hpp/tut/tut.hpp"
 
 int main(int, char*[])
 {
