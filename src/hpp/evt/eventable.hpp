@@ -33,15 +33,7 @@ namespace evt
 
     protected:
 
-        void const* try_cast_const(const char* type_name) const override
-        {
-            return try_cast_const_impl<xtd::castable>(this, type_name);
-        }
-
-        void* try_cast(const char* type_name) override
-        {
-            return try_cast_impl<xtd::castable>(this, type_name);
-        }
+        ENABLE_CAST(xtd::castable, eventable<P>)
 
         template<typename P>
         friend xtd::id_t get_subscription_id(P& program);

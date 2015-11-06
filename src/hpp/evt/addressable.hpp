@@ -23,15 +23,7 @@ namespace evt
 
     protected:
 
-        void const* try_cast_const(const char* type_name) const override
-        {
-            return try_cast_const_impl<castable>(this, type_name);
-        }
-
-        void* try_cast(const char* type_name) override
-        {
-            return try_cast_impl<castable>(this, type_name);
-        }
+        ENABLE_CAST(castable, addressable)
 
         friend xtd::name_t get_name(const addressable& addressable);
 

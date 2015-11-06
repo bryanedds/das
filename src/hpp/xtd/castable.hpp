@@ -26,20 +26,6 @@ namespace xtd
             return nullptr;
         }
 
-        template<typename S, typename T>
-        void const* try_cast_const_impl(const T* self, const char* type_name) const
-        {
-            if (type_name == typeid(T).name()) return static_cast<const void*>(self);
-                return S::try_cast_const(type_name);
-        }
-
-        template<typename S, typename T>
-        void* try_cast_impl(T* self, const char* type_name)
-        {
-            if (type_name == typeid(T).name()) return static_cast<void*>(self);
-                return S::try_cast(type_name);
-        }
-
         template<typename T>
         friend const T* try_cast_const(const castable* castable);
 
@@ -138,5 +124,19 @@ namespace xtd
         throw std::logic_error("Invalid cast.");
     }
 }
+
+#define ENABLE_CAST(S, T) \
+    \
+    void const* try_cast_const(const char* type_name) const override \
+    { \
+        if (type_name == typeid(T).name()) return static_cast<const void*>(this); \
+        return S::try_cast_const(type_name); \
+    } \
+    \
+    void* try_cast(const char* type_name) override \
+    { \
+        if (type_name == typeid(T).name()) return static_cast<void*>(this); \
+        return S::try_cast(type_name); \
+    }
 
 #endif

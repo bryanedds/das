@@ -30,15 +30,8 @@ namespace evt
 
     protected:
 
-        void const* try_cast_const(const char* type_name) const override
-        {
-            return try_cast_const_impl<xtd::castable>(this, type_name);
-        }
-
-        void* try_cast(const char* type_name) override
-        {
-            return try_cast_impl<xtd::castable>(this, type_name);
-        }
+        using subscription_detailTC = subscription_detail<T, P>;
+        ENABLE_CAST(xtd::castable, subscription_detailTC)
 
         template<typename T, typename P>
         friend bool publish_subscription_detail(const subscription_detail<T, P>& subscription_detail, const evt::event<T>& event, P& program);

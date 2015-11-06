@@ -21,15 +21,7 @@ namespace prg
     {
     protected:
 
-        void const* try_cast_const(const char* type_name) const override
-        {
-            return try_cast_const_impl<event_program, evt::eventable<event_program>>(type_name);
-        }
-
-        void* try_cast(const char* type_name) override
-        {
-            return try_cast_impl<event_program, evt::eventable<event_program>>(type_name);
-        }
+        ENABLE_CAST(evt::eventable<event_program>, event_program)
     };
 
     // Shadow evt::handler with a simplified form.
@@ -51,7 +43,7 @@ int main(int, char*[])
     /// subscribe to an event with a printf handler that returns true to allow the event to propagate to any downstream handlers
     auto unsubscribe = prg::subscribe_event<std::string, prg::event_program>(program, event_address, participant, [](const auto& event, auto&)
     {
-        printf("%s\r\n", event.data.c_str());
+        std::cout << event.data.c_str() << std::endl;
         return true;
     });
 

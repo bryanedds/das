@@ -142,7 +142,7 @@ namespace tut
     // A good example of a mixin is implemented in '../hpp/xtd/castable.hpp'. By inheriting from
     // this mixin, you get dynamic castability capabilities via -
     // 1) A common base type xtd::castable.
-    // 2) Virtual try_cast functions, with default template impl functions to ease overriding.
+    // 2) Virtual try_cast functions, with a macro to automate overriding.
     // 3) A completely general public interface, including casting with smart ptrs.
     //
     // The following is a type that leverages the castable mixin -
@@ -156,17 +156,7 @@ namespace tut
 
     protected:
 
-        // Override xtd::castable::try_cast_const from mixin.
-        void const* try_cast_const(const char* type_name) const override
-        {
-            return try_cast_const_impl<castable>(this, type_name);
-        }
-
-        // Override xtd::castable::try_cast from mixin.
-        void* try_cast(const char* type_name) override
-        {
-            return try_cast_impl<castable>(this, type_name);
-        }
+        ENABLE_CAST(xtd::castable, widget)
 
         friend int get_upc(const widget& widget);
         friend bool should_replace(const widget& widget, float age_max);
