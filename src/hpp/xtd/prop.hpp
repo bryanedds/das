@@ -16,7 +16,7 @@ namespace xtd
     // castable. Props will be serializable to Nu-style algebraic expressions. Also make prop_map
     // hold the new prop type instead of castable.
     template<typename T>
-    class prop : castable
+    class prop : public castable
     {
     private:
 
@@ -28,12 +28,11 @@ namespace xtd
 
     public:
 
-        prop() = default
+        prop() = default;
         prop(const T& value) : data(value) { }
         prop(const prop& that) : data(that.data) { }
         prop(prop&& that) : data(std::move(that.data)) { }
         prop& operator=(const prop& that) = default;
-        bool operator==(const prop& that) const = default;
 
         const T& operator()() const { return data; }
         T& operator()() { return data; }

@@ -5,9 +5,9 @@
 #include <string>
 #include <iostream>
 
-#include "../hpp/hpp/xtd/prelude.hpp"
-#include "../hpp/hpp/xtd/name.hpp"
-#include "../hpp/hpp/xtd/prop.hpp"
+#include "../hpp/xtd/prelude.hpp"
+#include "../hpp/xtd/name.hpp"
+#include "../hpp/xtd/prop.hpp"
 
 int main(int, char*[])
 {
