@@ -72,14 +72,14 @@ namespace tut
     // preferable to member functions because they are much more amenable to use in generic
     // programming. For more on this see - http://www.gotw.ca/gotw/084.htm and -
     // http://www.drdobbs.com/cpp/how-non-member-functions-improve-encapsu/184401197
-    int func(const data_abstraction& da)
+    inline int func(const data_abstraction& da)
     {
         return da.value * 5;
     }
 
     // Unlike with OO interfaces, extending a DA is easy; even if you're in a different file or
     // code base, just open up the DA's namespace and add functions to you heart's content!
-    int func_ex(const data_abstraction& da)
+    inline int func_ex(const data_abstraction& da)
     {
         return func(da) + 5;
     }
@@ -115,14 +115,14 @@ namespace tut
 
     // Int specialization of op.
     template<>
-    int op(const int& a, const int& b)
+    inline int op(const int& a, const int& b)
     {
         return a * b;
     }
 
     // Float specialization of op.
     template<>
-    float op(const float& a, const float& b)
+    inline float op(const float& a, const float& b)
     {
         return a / b;
     }
