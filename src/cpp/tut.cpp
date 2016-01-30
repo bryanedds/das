@@ -31,8 +31,8 @@ int main(int, char*[])
 
     /// make a widget, and cast it back and forth
     auto widget = std::make_unique<tut::widget>(12345, 101.0f, true);
-    auto castable = xtd::cast_unique<xtd::castable>(std::move(widget));
-    auto widget_again = xtd::cast_unique<tut::widget>(std::move(castable));
+    auto castable = das::cast_unique<das::castable>(std::move(widget));
+    auto widget_again = das::cast_unique<tut::widget>(std::move(castable));
 
     /// check its replacability :)
     std::cout << tut::should_replace_with(*widget_again, 100.0f, 12345) << std::endl;

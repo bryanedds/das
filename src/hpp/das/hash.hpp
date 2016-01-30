@@ -1,12 +1,13 @@
-#ifndef xtd_hash_hpp
-#define xtd_hash_hpp
+#ifndef das_hash_hpp
+#define das_hash_hpp
 
 #include <cstddef>
 #include <numeric>
+#include <functional>
 
 #include "prelude.hpp"
 
-namespace xtd
+namespace das
 {
     // Get the hash of a T value.
     template<typename T>
@@ -15,11 +16,11 @@ namespace xtd
         return std::hash<T>()(t);
     }
 
-    // Get the hash of a container in terms of its contents.
+    // Get the hash of a container in terms of its content.
     template<typename T, typename It>
     std::size_t get_hash_range(const It& begin, const It& end)
     {
-        return std::accumulate(begin, end, 0z, [](auto acc, const auto& t) { return get_hash<T>(t) ^ acc; });
+        return std::accumulate(begin, end, 0z, [](var acc, val& t) { return get_hash<T>(t) ^ acc; });
     }
 }
 

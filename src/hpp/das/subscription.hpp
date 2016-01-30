@@ -1,28 +1,26 @@
-#ifndef xtd_subscription_hpp
-#define xtd_subscription_hpp
+#ifndef DAS_SUBSCRIPTION_HPP
+#define DAS_SUBSCRIPTION_HPP
 
 #include <cstddef>
-#include <cassert>
 #include <memory>
 #include <functional>
 #include <vector>
 #include <unordered_map>
 
-#include "../xtd/prelude.hpp"
-#include "../xtd/id.hpp"
-#include "../xtd/castable.hpp"
-
+#include "prelude.hpp"
+#include "id.hpp"
+#include "castable.hpp"
 #include "addressable.hpp"
 #include "address.hpp"
 #include "event.hpp"
 
-namespace evt
+namespace das
 {
     template<typename T, typename P>
     using handler = std::function<bool(const event<T>&, P&)>;
 
     template<typename T, typename P>
-    class subscription_detail : public xtd::castable
+    class subscription_detail : public castable
     {
     private:
 
@@ -30,23 +28,25 @@ namespace evt
 
     protected:
 
-        using subscription_detailTC = subscription_detail<T, P>;
-        ENABLE_CAST(xtd::castable, subscription_detailTC)
+        using subscription_detail_T_P = subscription_detail<T, P>;
+        enable_cast(subscription_detail_T_P, castable);
 
         template<typename T, typename P>
-        friend bool publish_subscription_detail(const subscription_detail<T, P>& subscription_detail, const evt::event<T>& event, P& program);
+        friend bool publish_subscription_detail(const subscription_detail<T, P>& subscription_detail, const event<T>& event, P& program);
 
     public:
 
+        constraint(subscription_detail);
+
         subscription_detail() = delete;
-        subscription_detail(const evt::handler<T, P>& handler) : handler(handler) { }
+        subscription_detail(const das::handler<T, P>& handler) : handler(handler) { }
         subscription_detail(const subscription_detail& that) = delete;
         subscription_detail(subscription_detail&& that) = delete;
         subscription_detail& operator=(const subscription_detail& that) = delete;
     };
 
     template<typename T, typename P>
-    bool publish_subscription_detail(const subscription_detail<T, P>& subscription_detail, const evt::event<T>& event, P& program)
+    bool publish_subscription_detail(const subscription_detail<T, P>& subscription_detail, const event<T>& event, P& program)
     {
         return subscription_detail.handler(event, program);
     }
@@ -60,22 +60,23 @@ namespace evt
 
     public:
 
-        const xtd::id_t id;
+        const id_t id;
         const std::weak_ptr<addressable> subscriber_opt;
-        const std::unique_ptr<xtd::castable> subscription_detail;
+        const std::unique_ptr<castable> subscription_detail;
+
+        subscription() = delete;
+        subscription(const subscription&) = delete;
+        subscription(subscription&&) = delete;
+        subscription& operator=(const subscription&) = delete;
+        subscription& operator=(subscription&&) = delete;
 
         subscription(
-            xtd::id_t id,
+            id_t id,
             std::shared_ptr<addressable> subscriber,
-            std::unique_ptr<xtd::castable> subscription_detail) :
+            std::unique_ptr<castable> subscription_detail) :
             id(id),
             subscriber_opt(subscriber),
             subscription_detail(subscription_detail.release()) { }
-
-        subscription(const subscription& that) = delete;
-        subscription(subscription&& that) = delete;
-        subscription& operator=(const subscription& that) = delete;
-        bool operator==(const subscription& that) const = delete;
     };
 
     template<typename T, typename P>
@@ -83,10 +84,10 @@ namespace evt
     {
         if (!subscription.subscriber_opt.expired())
         {
-            const auto subscriber(subscription.subscriber_opt.lock());
-            const auto event(event<T>(event_data, event_address, subscriber, publisher));
-            const auto* subscription_detail_opt(xtd::try_cast_const<subscription_detail<T, P>>(subscription.subscription_detail.get()));
-            if (subscription_detail_opt) return publish_subscription_detail(*subscription_detail_opt, event, program);
+            val& subscriber = subscription.subscriber_opt.lock();
+            val& event = das::event<T>(event_data, event_address, subscriber, publisher);
+            val& subscription_detail_opt = try_cast_const<subscription_detail<T, P>>(*subscription.subscription_detail);
+            if (subscription_detail_opt) return publish_subscription_detail(**subscription_detail_opt, event, program);
             return true;
         }
         return true;
@@ -96,7 +97,7 @@ namespace evt
 
     using subscriptions_map = std::unordered_map<address, std::unique_ptr<subscription_list>>;
 
-    using unsubscription_map = std::unordered_map<xtd::id_t, std::pair<address, std::weak_ptr<addressable>>>;
+    using unsubscription_map = std::unordered_map<id_t, std::pair<address, std::weak_ptr<addressable>>>;
 }
 
 #endif

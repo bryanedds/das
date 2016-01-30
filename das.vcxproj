@@ -19,24 +19,23 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\cpp\evt.cpp" />
+    <ClCompile Include="src\cpp\das.cpp" />
     <ClCompile Include="src\cpp\tut.cpp" />
-    <ClCompile Include="src\cpp\xtd.cpp" />
+    <ClCompile Include="src\hpp\das\hash.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\hpp\evt\address.hpp" />
-    <ClInclude Include="src\hpp\evt\addressable.hpp" />
-    <ClInclude Include="src\hpp\evt\event.hpp" />
-    <ClInclude Include="src\hpp\evt\eventable.hpp" />
-    <ClInclude Include="src\hpp\evt\subscription.hpp" />
+    <ClInclude Include="src\hpp\das\address.hpp" />
+    <ClInclude Include="src\hpp\das\addressable.hpp" />
+    <ClInclude Include="src\hpp\das\castable.hpp" />
+    <ClInclude Include="src\hpp\das\event.hpp" />
+    <ClInclude Include="src\hpp\das\eventable.hpp" />
+    <ClInclude Include="src\hpp\das\id.hpp" />
+    <ClInclude Include="src\hpp\das\name.hpp" />
+    <ClInclude Include="src\hpp\das\prelude.hpp" />
+    <ClInclude Include="src\hpp\das\property.hpp" />
+    <ClInclude Include="src\hpp\das\string.hpp" />
+    <ClInclude Include="src\hpp\das\subscription.hpp" />
     <ClInclude Include="src\hpp\tut\tut.hpp" />
-    <ClInclude Include="src\hpp\xtd\castable.hpp" />
-    <ClInclude Include="src\hpp\xtd\id.hpp" />
-    <ClInclude Include="src\hpp\xtd\hash.hpp" />
-    <ClInclude Include="src\hpp\xtd\name.hpp" />
-    <ClInclude Include="src\hpp\xtd\prelude.hpp" />
-    <ClInclude Include="src\hpp\xtd\prop.hpp" />
-    <ClInclude Include="src\hpp\xtd\string.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A5E39BFC-C35A-4154-9430-2EDE56D464AD}</ProjectGuid>

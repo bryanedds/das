@@ -5,8 +5,8 @@
 #include <string>
 #include <iostream>
 
-#include "../hpp/xtd/prelude.hpp"
-#include "../hpp/xtd/string.hpp"
+#include "../hpp/das/prelude.hpp"
+#include "../hpp/das/string.hpp"
 #include "../hpp/evt/addressable.hpp"
 #include "../hpp/evt/address.hpp"
 #include "../hpp/evt/eventable.hpp"
@@ -38,7 +38,7 @@ int main(int, char*[])
     auto event_address = prg::address("event");
 
     /// instantiate an event participant
-    auto participant = std::make_shared<prg::addressable>(xtd::name_t("participant"));
+    auto participant = std::make_shared<prg::addressable>(das::name_t("participant"));
 
     /// subscribe to an event with a printf handler that returns true to allow the event to propagate to any downstream handlers
     auto unsubscribe = prg::subscribe_event<std::string, prg::event_program>(program, event_address, participant, [](const auto& event, auto&)

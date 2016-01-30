@@ -9,69 +9,63 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Header Files\xtd">
-      <UniqueIdentifier>{a465dd24-8f0f-4e71-b250-21cf8127c704}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\evt">
-      <UniqueIdentifier>{d70ea32e-8bfb-402a-bc0f-cf837674420a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\tut">
       <UniqueIdentifier>{58214c50-1f00-42ae-855c-a3d12142bf6e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\exs">
+    <Filter Include="Header Files\das">
+      <UniqueIdentifier>{8cb11413-25d8-4c49-9bfe-f6fc5c9e9ac3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tut">
       <UniqueIdentifier>{6ab4d944-86b5-4154-8a68-c99fbe23e2e5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\cpp\evt.cpp">
-      <Filter>Source Files\exs</Filter>
-    </ClCompile>
     <ClCompile Include="src\cpp\tut.cpp">
-      <Filter>Source Files\exs</Filter>
+      <Filter>Source Files\tut</Filter>
     </ClCompile>
-    <ClCompile Include="src\cpp\xtd.cpp">
-      <Filter>Source Files\exs</Filter>
+    <ClCompile Include="src\cpp\das.cpp">
+      <Filter>Source Files\tut</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hpp\das\hash.hpp">
+      <Filter>Header Files\das</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\hpp\evt\address.hpp">
-      <Filter>Header Files\evt</Filter>
-    </ClInclude>
-    <ClInclude Include="src\hpp\evt\addressable.hpp">
-      <Filter>Header Files\evt</Filter>
-    </ClInclude>
-    <ClInclude Include="src\hpp\evt\event.hpp">
-      <Filter>Header Files\evt</Filter>
-    </ClInclude>
-    <ClInclude Include="src\hpp\evt\subscription.hpp">
-      <Filter>Header Files\evt</Filter>
-    </ClInclude>
-    <ClInclude Include="src\hpp\xtd\castable.hpp">
-      <Filter>Header Files\xtd</Filter>
-    </ClInclude>
-    <ClInclude Include="src\hpp\xtd\hash.hpp">
-      <Filter>Header Files\xtd</Filter>
-    </ClInclude>
-    <ClInclude Include="src\hpp\xtd\name.hpp">
-      <Filter>Header Files\xtd</Filter>
-    </ClInclude>
-    <ClInclude Include="src\hpp\xtd\prelude.hpp">
-      <Filter>Header Files\xtd</Filter>
-    </ClInclude>
-    <ClInclude Include="src\hpp\xtd\prop.hpp">
-      <Filter>Header Files\xtd</Filter>
-    </ClInclude>
-    <ClInclude Include="src\hpp\xtd\string.hpp">
-      <Filter>Header Files\xtd</Filter>
-    </ClInclude>
-    <ClInclude Include="src\hpp\xtd\id.hpp">
-      <Filter>Header Files\xtd</Filter>
-    </ClInclude>
-    <ClInclude Include="src\hpp\evt\eventable.hpp">
-      <Filter>Header Files\evt</Filter>
-    </ClInclude>
     <ClInclude Include="src\hpp\tut\tut.hpp">
       <Filter>Header Files\tut</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hpp\das\addressable.hpp">
+      <Filter>Header Files\das</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hpp\das\castable.hpp">
+      <Filter>Header Files\das</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hpp\das\event.hpp">
+      <Filter>Header Files\das</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hpp\das\eventable.hpp">
+      <Filter>Header Files\das</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hpp\das\id.hpp">
+      <Filter>Header Files\das</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hpp\das\name.hpp">
+      <Filter>Header Files\das</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hpp\das\prelude.hpp">
+      <Filter>Header Files\das</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hpp\das\property.hpp">
+      <Filter>Header Files\das</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hpp\das\string.hpp">
+      <Filter>Header Files\das</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hpp\das\subscription.hpp">
+      <Filter>Header Files\das</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hpp\das\address.hpp">
+      <Filter>Header Files\das</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

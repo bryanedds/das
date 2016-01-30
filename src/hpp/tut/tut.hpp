@@ -1,10 +1,10 @@
-#ifndef tut_polymorphism_hpp
-#define tut_polymorphism_hpp
+#ifndef TUT_POLYMORPHISM_HPP
+#define TUT_POLYMORPHISM_HPP
 
 #include <cstddef>
 #include <functional>
 
-#include "../xtd/castable.hpp"
+#include "../das/castable.hpp"
 
 namespace tut
 {
@@ -139,14 +139,14 @@ namespace tut
     // class a posteriori via template arguments, our mixins are simple data abstractions that each
     // provide a single orthogonal capability to another data abstraction via inheritance.
     //
-    // A good example of a mixin is implemented in '../hpp/xtd/castable.hpp'. By inheriting from
+    // A good example of a mixin is implemented in '../hpp/das/castable.hpp'. By inheriting from
     // this mixin, you get dynamic castability capabilities via -
-    // 1) A common base type xtd::castable.
+    // 1) A common base type das::castable.
     // 2) Virtual try_cast functions, with a macro to automate overriding.
     // 3) A completely general public interface, including casting with smart ptrs.
     //
     // The following is a type that leverages the castable mixin -
-    class widget : public xtd::castable
+    class widget : public das::castable
     {
     private:
 
@@ -156,7 +156,7 @@ namespace tut
 
     protected:
 
-        ENABLE_CAST(xtd::castable, widget)
+        enable_cast(widget, das::castable);
 
         friend int get_upc(const widget& widget);
         friend bool should_replace(const widget& widget, float age_max);
@@ -171,19 +171,19 @@ namespace tut
     };
 
     // Get the upc of a widget.
-    int get_upc(const widget& widget)
+    inline int get_upc(const widget& widget)
     {
         return widget.upc;
     }
 
     // Query that a widget should be replaced.
-    bool should_replace(const widget& widget, float age_max)
+    inline bool should_replace(const widget& widget, float age_max)
     {
         return widget.replacable && widget.age > age_max;
     }
 
     // Query that a widget should be replaced with a give product.
-    bool should_replace_with(const widget& widget, float age_max, int upc)
+    inline bool should_replace_with(const widget& widget, float age_max, int upc)
     {
         return should_replace(widget, age_max) && get_upc(widget) == upc;
     }
