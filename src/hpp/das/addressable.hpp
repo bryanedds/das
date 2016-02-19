@@ -29,7 +29,7 @@ namespace das
 
     public:
 
-        constraint(addressable);
+        CONSTRAINT(addressable);
         explicit addressable(const name_t& name) : name(name) { }
     };
 

@@ -37,7 +37,7 @@ namespace das
 
     public:
 
-        constraint(castable);
+        CONSTRAINT(castable);
 
         castable() = default;
         castable(const castable&) = delete;
@@ -51,16 +51,16 @@ namespace das
     template<typename T>
     const T* try_cast_const(const castable& castable)
     {
-        val type_index = std::type_index(typeid(T));
-        val* t_opt(static_cast<const T*>(castable.try_cast_const(type_index)));
+        VAL type_index = std::type_index(typeid(T));
+        VAL* t_opt(static_cast<const T*>(castable.try_cast_const(type_index)));
         return t_opt;
     }
 
     template<typename T>
     T* try_cast(castable& castable)
     {
-        val type_index = std::type_index(typeid(T));
-        var* t_opt(static_cast<T*>(castable.try_cast(type_index)));
+        VAL type_index = std::type_index(typeid(T));
+        VAR* t_opt(static_cast<T*>(castable.try_cast(type_index)));
         return t_opt;
     }
 
@@ -79,7 +79,7 @@ namespace das
     template<typename U, typename T>
     std::shared_ptr<U> try_cast_shared(const std::shared_ptr<T>& source)
     {
-        var u_opt = try_cast<U>(*source);
+        VAR u_opt = try_cast<U>(*source);
         if (u_opt) return std::shared_ptr<U>(source, *u_opt);
         return std::shared_ptr<U>();
     }
@@ -87,7 +87,7 @@ namespace das
     template<typename U, typename T>
     std::shared_ptr<U> cast_shared(const std::shared_ptr<T>& source)
     {
-        var u_opt = try_cast<U>(*source);
+        VAR u_opt = try_cast<U>(*source);
         if (u_opt) return std::shared_ptr<U>(source, u_opt);
         throw std::logic_error("Invalid cast.");
     }
@@ -95,7 +95,7 @@ namespace das
     template<typename U, typename T>
     std::unique_ptr<U> cast_unique(std::unique_ptr<T>&& source)
     {
-        var u_opt = try_cast<U>(*source);
+        VAR u_opt = try_cast<U>(*source);
         if (u_opt)
         {
             source.release();

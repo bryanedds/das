@@ -48,7 +48,7 @@ namespace das
 
     public:
 
-        constraint(eventable);
+        CONSTRAINT(eventable);
 
         eventable() :
             castable(),
@@ -61,9 +61,9 @@ namespace das
     template<typename P>
     id_t get_subscription_id(P& program)
     {
-        constrain(P, eventable);
-        val& pred_id = *program.pred_id;
-        val& succ_id = succ(pred_id);
+        CONSTRAIN(P, eventable);
+        VAL& pred_id = *program.pred_id;
+        VAL& succ_id = succ(pred_id);
         program.pred_id = std::make_unique<id_t>(succ_id);
         return succ_id;
     }
@@ -71,19 +71,19 @@ namespace das
     template<typename P>
     void unsubscribe_event(P& program, id_t subscription_id)
     {
-        constrain(P, eventable);
-        val& unsubscription_opt = program.unsubscription_map.find(subscription_id);
+        CONSTRAIN(P, eventable);
+        VAL& unsubscription_opt = program.unsubscription_map.find(subscription_id);
         if (unsubscription_opt != std::end(program.unsubscription_map))
         {
-            val& subscriptions_opt = program.subscriptions_map.find(unsubscription_opt->second.first);
+            VAL& subscriptions_opt = program.subscriptions_map.find(unsubscription_opt->second.first);
             if (subscriptions_opt != std::end(program.subscriptions_map))
             {
-                var& subscriptions = *subscriptions_opt->second;
+                VAR& subscriptions = *subscriptions_opt->second;
                 subscriptions.erase(
                     std::remove_if(
                     std::begin(subscriptions),
                     std::end(subscriptions),
-                    [unsubscription_opt](val& subscription)
+                    [unsubscription_opt](VAL& subscription)
                 { return subscription->subscriber_opt.lock().get() == unsubscription_opt->second.second.lock().get(); }));
                 program.unsubscription_map.erase(unsubscription_opt);
             }
@@ -93,18 +93,18 @@ namespace das
     template<typename T, typename P, typename H>
     unsubscriber<P> subscribe_event5(P& program, id_t subscription_id, const address& address, const std::shared_ptr<addressable>& subscriber, const H& handler)
     {
-        constrain(P, eventable);
-        var subscription_detail_mvb = cast_unique<castable>(std::make_unique<subscription_detail<T, P>>(handler));
-        var subscriptions_opt = program.subscriptions_map.find(address);
+        CONSTRAIN(P, eventable);
+        VAR subscription_detail_mvb = cast_unique<castable>(std::make_unique<subscription_detail<T, P>>(handler));
+        VAR subscriptions_opt = program.subscriptions_map.find(address);
         if (subscriptions_opt != std::end(program.subscriptions_map))
         {
-            val& subscription = std::make_shared<das::subscription>(subscription_id, subscriber, std::move(subscription_detail_mvb));
+            VAL& subscription = std::make_shared<das::subscription>(subscription_id, subscriber, std::move(subscription_detail_mvb));
             subscriptions_opt->second->push_back(subscription);
         }
         else
         {
-            val& subscription = std::make_shared<das::subscription>(subscription_id, subscriber, std::move(subscription_detail_mvb));
-            var subscriptions_mvb = std::make_unique<subscription_list>();
+            VAL& subscription = std::make_shared<das::subscription>(subscription_id, subscriber, std::move(subscription_detail_mvb));
+            VAR subscriptions_mvb = std::make_unique<subscription_list>();
             subscriptions_mvb->push_back(subscription);
             program.subscriptions_map.insert(std::make_pair(address::address(address), std::move(subscriptions_mvb)));
         }
@@ -115,21 +115,21 @@ namespace das
     template<typename T, typename P, typename H>
     unsubscriber<P> subscribe_event(P& program, const address& address, const std::shared_ptr<addressable>& subscriber, const H& handler)
     {
-        constrain(P, eventable);
+        CONSTRAIN(P, eventable);
         return subscribe_event5<T, P>(program, get_subscription_id(program), address, subscriber, handler);
     }
 
     template<typename T, typename P>
     void publish_event(P& program, const T& event_data, const address& event_address, const std::shared_ptr<addressable>& publisher)
     {
-        constrain(P, eventable);
-        val& subscriptions_opt = program.subscriptions_map.find(event_address);
+        CONSTRAIN(P, eventable);
+        VAL& subscriptions_opt = program.subscriptions_map.find(event_address);
         if (subscriptions_opt != std::end(program.subscriptions_map))
         {
-            val subscriptions_copy = *subscriptions_opt->second;
-            for (val& subscription : subscriptions_copy)
+            VAL subscriptions_copy = *subscriptions_opt->second;
+            for (VAL& subscription : subscriptions_copy)
             {
-                val cascade = publish_subscription<T, P>(*subscription, event_data, event_address, publisher, program);
+                VAL cascade = publish_subscription<T, P>(*subscription, event_data, event_address, publisher, program);
                 if (!cascade) break;
             }
         }

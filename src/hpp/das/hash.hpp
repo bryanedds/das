@@ -20,7 +20,7 @@ namespace das
     template<typename T, typename It>
     std::size_t get_hash_range(const It& begin, const It& end)
     {
-        return std::accumulate(begin, end, 0z, [](var acc, val& t) { return get_hash<T>(t) ^ acc; });
+        return std::accumulate(begin, end, 0z, [](VAR acc, VAL& t) { return get_hash<T>(t) ^ acc; });
     }
 }
 

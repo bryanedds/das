@@ -15,7 +15,7 @@ namespace das
     template<typename T>
     struct event
     {
-        constraint(event);
+        CONSTRAINT(event);
 
         template<typename A>
         using reify = event<A>;

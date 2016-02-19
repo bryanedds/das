@@ -25,7 +25,7 @@ namespace ax
 
     public:
 
-        constraint(property);
+        CONSTRAINT(property);
 
         template<typename A>
         using reify = property<A>;

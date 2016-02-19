@@ -36,7 +36,7 @@ namespace das
 
     public:
 
-        constraint(subscription_detail);
+        CONSTRAINT(subscription_detail);
 
         subscription_detail() = delete;
         subscription_detail(const das::handler<T, P>& handler) : handler(handler) { }
@@ -84,9 +84,9 @@ namespace das
     {
         if (!subscription.subscriber_opt.expired())
         {
-            val& subscriber = subscription.subscriber_opt.lock();
-            val& event = das::event<T>(event_data, event_address, subscriber, publisher);
-            val& subscription_detail_opt = try_cast_const<subscription_detail<T, P>>(*subscription.subscription_detail);
+            VAL& subscriber = subscription.subscriber_opt.lock();
+            VAL& event = das::event<T>(event_data, event_address, subscriber, publisher);
+            VAL& subscription_detail_opt = try_cast_const<subscription_detail<T, P>>(*subscription.subscription_detail);
             if (subscription_detail_opt) return publish_subscription_detail(**subscription_detail_opt, event, program);
             return true;
         }
