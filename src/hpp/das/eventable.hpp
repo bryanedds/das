@@ -32,7 +32,7 @@ namespace das
 
     protected:
 
-        enable_cast(eventable<P>, castable);
+        ENABLE_CAST(eventable<P>, castable);
 
         template<typename P>
         friend id_t get_subscription_id(P& program);

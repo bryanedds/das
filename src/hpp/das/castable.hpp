@@ -105,7 +105,7 @@ namespace das
     }
 }
 
-#define enable_cast(t, s) \
+#define ENABLE_CAST(t, s) \
     \
     const void* try_cast_const(std::type_index type_index) const override \
     { \

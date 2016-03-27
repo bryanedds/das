@@ -153,7 +153,7 @@ namespace tut
 
     protected:
 
-        enable_cast(widget, das::castable);
+        ENABLE_CAST(widget, das::castable);
 
         friend int get_upc(const widget& widget);
         friend bool should_replace(const widget& widget, float age_max);

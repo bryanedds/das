@@ -1,5 +1,5 @@
 #ifndef DAS_ADDRESSABLE_HPP
-#define XTD_ADDRESSABLE_HPP
+#define DAS_ADDRESSABLE_HPP
 
 #include <cstddef>
 
@@ -24,7 +24,7 @@ namespace das
 
     protected:
 
-        enable_cast(addressable, castable);
+        ENABLE_CAST(addressable, castable);
         friend name_t get_name(const addressable& addressable);
 
     public:

@@ -29,7 +29,7 @@ namespace das
     protected:
 
         using subscription_detail_T_P = subscription_detail<T, P>;
-        enable_cast(subscription_detail_T_P, castable);
+        ENABLE_CAST(subscription_detail_T_P, castable);
 
         template<typename T, typename P>
         friend bool publish_subscription_detail(const subscription_detail<T, P>& subscription_detail, const event<T>& event, P& program);

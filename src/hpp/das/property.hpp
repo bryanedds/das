@@ -1,5 +1,5 @@
-#ifndef XTD_PROPERTY_HPP
-#define XTD_PROPERTY_HPP
+#ifndef DAS_PROPERTY_HPP
+#define DAS_PROPERTY_HPP
 
 #include <cstddef>
 #include <stdexcept>
@@ -10,7 +10,7 @@
 #include "name.hpp"
 #include "castable.hpp"
 
-namespace ax
+namespace das
 {
     template<typename T>
     class property : public castable
@@ -21,7 +21,7 @@ namespace ax
 
     protected:
 
-        enable_cast(property<T>, castable);
+        ENABLE_CAST(property<T>, castable);
 
     public:
 
