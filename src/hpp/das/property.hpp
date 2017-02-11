@@ -66,7 +66,7 @@ namespace das
     using property_map = std::unordered_map<name_t, std::unique_ptr<castable>>;
 
     template<typename T>
-    property<T> get_property(const property_map& properties)
+    property<T> get_property(const property_map& properties, const name_t& name)
     {
         const property_map::iterator property_opt = properties.find(name);
         if (property_opt) return *property_opt;
@@ -74,7 +74,7 @@ namespace das
     }
 
     template<typename T>
-    property<T>& get_property(property_map& properties)
+    property<T>& get_property(property_map& properties, const name_t& name)
     {
         const property_map::iterator property_opt = properties.find(name);
         if (property_opt) return *property_opt;
