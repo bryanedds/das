@@ -16,7 +16,7 @@ namespace tut
     // 1) data abstractions rather than OOP objects
     // 2) stand-alone functions rather than member functions
     // 3) composable mixins rather than OOP inheritance
-    // 4) the following types of polymorphism rather than OOP polymorphism -
+    // 4) the following types of polymorphism rather than subtype (OOP) polymorphism -
     //      a) ad-hoc polymorphism (function overloading)
     //      b) structural polymorphism (function templates without specialization)
     //      c) static polymorphisms (function templates with specialization)
@@ -77,7 +77,7 @@ namespace tut
         return da.value * 5;
     }
 
-    // Unlike with OO interfaces, extending a DA is easy; even if you're in a different file or
+    // Unlike with OOP interfaces, extending a DA is easy; even if you're in a different file or
     // code base, just open up the DA's namespace and add functions to you heart's content!
     inline int func_ex(const data_abstraction& da)
     {
@@ -100,6 +100,8 @@ namespace tut
         return func_ex(t) * func_ex(t);
     }
 
+    // Let's now talk about the other recommended forms of polymorphism.
+    //
     // Template specialization provides a powerful form of static polymorphism in C++. On the plus
     // side, it's generally efficient, and in simpler forms, is easy to understand. On the minus,
     // you may very well wish to avoid mixing usage of this feature with function overloading due
