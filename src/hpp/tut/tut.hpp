@@ -104,8 +104,8 @@ namespace tut
     //
     // Template specialization provides a powerful form of static polymorphism in C++. On the plus
     // side, it's generally efficient, and in simpler forms, is easy to understand. On the minus,
-    // you may very well wish to avoid mixing usage of this feature with function overloading due
-    // to complex interaction rules among the features - http://stackoverflow.com/a/7108123/1082782
+    // you have to be careful mixing usage of this feature with function overloading due to
+    // complex interaction rules among the features - http://stackoverflow.com/a/7108123/1082782
     template<typename T>
     T op(const T& a, const T& b)
     {
